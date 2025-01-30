@@ -21,7 +21,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const dbUrl = process.env.ATLASDB_URL || "mongodb://localhost:27017/yourDatabase"; // Fallback to local MongoDB
+const dbUrl = process.env.ATLASDB_URL
 
 async function main() {
     if (!dbUrl) {
@@ -30,7 +30,7 @@ async function main() {
     }
 
     try {
-        await mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true });
+        await mongoose.connect(dbUrl||"mongodb://127.0.0.1:27017/mydatabase", { useNewUrlParser: true, useUnifiedTopology: true });
         console.log("Connected to MongoDB");
     } catch (err) {
         console.error("MongoDB connection error:", err);
