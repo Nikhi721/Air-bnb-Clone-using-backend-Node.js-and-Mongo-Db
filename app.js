@@ -21,40 +21,55 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-const dbUrl = process.env.ATLASDB_URL
+// const dbUrl = process.env.ATLASDB_URL
 
-async function main() {
-    if (!dbUrl) {
-        console.error("Error: MongoDB URL is not defined.");
-        process.exit(1);
-    }
+// async function main() {
+//     if (!dbUrl) {
+//         console.error("Error: MongoDB URL is not defined.");
+//         process.exit(1);
+//     }
 
-    try {
-        await mongoose.connect(dbUrl||"mongodb://127.0.0.1:27017/mydatabase", { useNewUrlParser: true, useUnifiedTopology: true });
-        console.log("Connected to MongoDB");
-    } catch (err) {
-        console.error("MongoDB connection error:", err);
-        process.exit(1);
-    }
-}
-
-
-
-// const dbUrl= process.env.ATLASDB_URL;
+//     try {
+//         await mongoose.connect(dbUrl||"mongodb://127.0.0.1:27017/mydatabase", { useNewUrlParser: true, useUnifiedTopology: true });
+//         console.log("Connected to MongoDB");
+//     } catch (err) {
+//         console.error("MongoDB connection error:", err);
+//         process.exit(1);
+//     }
+// }
 
 
-// main()
-// .then(()=>{
-//     console.log("connected to  DB");
-// })
-// .catch((err)=>{
-//     console.log(err);
-// });
+
+const dbUrl= process.env.ATLASDB_URL;
+
+
+
+main()
+.then(()=>{
+    console.log("connected to  DB");
+})
+.catch((err)=>{
+    console.log(err);
+});
 
 // async function main()
 // {
 //  await mongoose.connect(dbUrl);
 // }
+
+async function main() {
+    try {
+        await mongoose.connect(dbUrl, { 
+           
+            serverSelectionTimeoutMS: 30000,
+            connectTimeoutMS: 30000
+        });
+        console.log("Connected to MongoDB");
+    } catch (err) {
+        console.error("MongoDB connection error:", err);
+        process.exit(1); // Or handle the error appropriately
+    }
+}
 
 
 app.set("view enginge ","ejs");
